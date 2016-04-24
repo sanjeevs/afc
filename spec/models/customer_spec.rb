@@ -20,6 +20,7 @@ describe Customer do
   describe 'when name is already taken' do
     before do
       customer_with_same_name = @customer.dup
+      customer_with_same_name.name = @customer.name.upcase
       customer_with_same_name.save
     end
     it { should_not be_valid }

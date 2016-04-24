@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false} 
   validates :amount, numericality: { greater_than_or_equal_to: 0}
 
   has_many :production_run, dependent: :destroy

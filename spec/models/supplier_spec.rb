@@ -19,6 +19,7 @@ describe Supplier do
   describe 'when name is already taken' do
     before do
       supplier_with_same_name = @supplier.dup
+      supplier_with_same_name.name = @supplier.name.upcase
       supplier_with_same_name.save
     end
     it { should_not be_valid }

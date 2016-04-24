@@ -23,6 +23,7 @@ describe Product do
   describe "name should be unique" do
     before do
       dup_product = @product.dup
+      dup_product.name = @product.name.upcase
       dup_product.save
     end
     it { expect(@product.valid?).to eql(false) }

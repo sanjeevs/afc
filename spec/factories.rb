@@ -1,4 +1,11 @@
 FactoryGirl.define do
+
+  factory :supply do
+    name "Tamarind"
+    amount 1
+    unit "kg"
+  end
+
   factory :product_adjust do
     amount 1
     product  
