@@ -1,13 +1,19 @@
 FactoryGirl.define do
+  factory :supply_received do
+    amount 1
+    unit "MyString"
+    supply
+    supplier
+  end
 
   factory :supply do
     name "Tamarind"
-    amount 1
+    amount 14
     unit "kg"
   end
 
   factory :product_adjust do
-    amount 1
+    amount 13
     product  
     user
   end
@@ -38,6 +44,10 @@ FactoryGirl.define do
 
   factory :customer do
     name 'customer1'
+  end
+
+  factory :supplier do
+    name 'supplier1'
   end
 
   factory :product do

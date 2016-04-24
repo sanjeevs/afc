@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424171417) do
+ActiveRecord::Schema.define(version: 20160424174457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,18 @@ ActiveRecord::Schema.define(version: 20160424171417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "supply_receiveds", force: :cascade do |t|
+    t.integer  "amount"
+    t.string   "unit"
+    t.integer  "supply_id"
+    t.integer  "supplier_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "supply_receiveds", ["supplier_id"], name: "index_supply_receiveds_on_supplier_id", using: :btree
+  add_index "supply_receiveds", ["supply_id"], name: "index_supply_receiveds_on_supply_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -144,4 +156,6 @@ ActiveRecord::Schema.define(version: 20160424171417) do
   add_foreign_key "product_shipments", "products"
   add_foreign_key "production_runs", "producers"
   add_foreign_key "production_runs", "products"
+  add_foreign_key "supply_receiveds", "suppliers"
+  add_foreign_key "supply_receiveds", "supplies"
 end

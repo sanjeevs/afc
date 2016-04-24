@@ -25,4 +25,14 @@ describe Supplier do
     it { should_not be_valid }
   end
 
+  describe "supply received" do
+    before do
+      @supply = Supply.create!(name: "xyz", unit: "kg", amount: 200)
+      supply_rcvd = SupplyReceived.create(amount: 102)
+      @supply.supply_received << supply_rcvd
+      @supplier.supply_received << supply_rcvd
+    end
+    it { expect(@supplier.supply_received[0].amount).to eql(102) }
+  end
+
 end
