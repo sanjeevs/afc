@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :supply_consumption do
+    amount 1
+    supply
+    production_run
+  end
   factory :supply_received do
     amount 1
     unit "MyString"

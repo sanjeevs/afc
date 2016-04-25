@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424174457) do
+ActiveRecord::Schema.define(version: 20160424235343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 20160424174457) do
   add_index "production_runs", ["producer_id"], name: "index_production_runs_on_producer_id", using: :btree
   add_index "production_runs", ["product_id"], name: "index_production_runs_on_product_id", using: :btree
 
+  create_table "production_runs_supplies", id: false, force: :cascade do |t|
+    t.integer "supply_id"
+    t.integer "production_run_id"
+  end
+
+  add_index "production_runs_supplies", ["production_run_id"], name: "index_production_runs_supplies_on_production_run_id", using: :btree
+  add_index "production_runs_supplies", ["supply_id"], name: "index_production_runs_supplies_on_supply_id", using: :btree
+
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.integer  "amount"
@@ -127,6 +135,17 @@ ActiveRecord::Schema.define(version: 20160424174457) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "supply_consumptions", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "supply_id"
+    t.integer  "production_run_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "supply_consumptions", ["production_run_id"], name: "index_supply_consumptions_on_production_run_id", using: :btree
+  add_index "supply_consumptions", ["supply_id"], name: "index_supply_consumptions_on_supply_id", using: :btree
+
   create_table "supply_receiveds", force: :cascade do |t|
     t.integer  "amount"
     t.string   "unit"
@@ -156,6 +175,10 @@ ActiveRecord::Schema.define(version: 20160424174457) do
   add_foreign_key "product_shipments", "products"
   add_foreign_key "production_runs", "producers"
   add_foreign_key "production_runs", "products"
+  add_foreign_key "production_runs_supplies", "production_runs"
+  add_foreign_key "production_runs_supplies", "supplies"
+  add_foreign_key "supply_consumptions", "production_runs"
+  add_foreign_key "supply_consumptions", "supplies"
   add_foreign_key "supply_receiveds", "suppliers"
   add_foreign_key "supply_receiveds", "supplies"
 end
