@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
     format: { with: VALID_EMAIL_REGEX }, 
     uniqueness: { case_sensitive: false } 
 
-  has_many :product_adjusts, dependent: :destroy
-  has_many :supply_adjusts, dependent: :destroy
+  # do not delete the adjusts just because the user is deleted.
+  # Instead we copy over the name and email of the user to adjust
+  # for bookeeping.
+  has_many :product_adjusts
+  has_many :supply_adjusts
 end
