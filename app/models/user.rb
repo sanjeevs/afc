@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
     uniqueness: { case_sensitive: false } 
 
   has_many :product_adjusts, dependent: :destroy
+  has_many :supply_adjusts, dependent: :destroy
 end
