@@ -13,8 +13,11 @@ describe ProductShipment do
   end
 
   describe "assocations" do
-    it { expect(@product_shipment.product.name).to eql('piaz') }
-    it { expect(@product_shipment.customer.name).to eql('Customer1') }
+    let(:product) { Product.find(@product_shipment.product_id) }
+    let(:customer) { Customer.find(@product_shipment.customer_id) }
+
+    it { expect(@product_shipment.product.name).to eql(product.name) }
+    it { expect(@product_shipment.customer.name).to eql(customer.name) }
   end
 
 end

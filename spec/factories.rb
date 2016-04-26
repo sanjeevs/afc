@@ -1,4 +1,22 @@
 FactoryGirl.define do
+  factory :address do
+    address { Faker::Address.street_address }
+    city { Faker::Address.city }
+    state { Faker::Address.state }
+    zipcode { Faker::Address.zip_code }
+    phone { Faker::PhoneNumber.phone_number }
+  end
+
+  factory :customer do
+    sequence(:name) { |n| "customer#{n}" }
+    sequence(:email) { |n| "person_#{n}@example.org" }
+  end
+  
+  factory :supplier do
+    sequence(:name) { |n| "supplier_#{n}" }
+    :address
+  end
+
   factory :supply_consumption do
     amount 1
     supply
@@ -47,13 +65,6 @@ FactoryGirl.define do
     contact 'john & patty'
   end
 
-  factory :customer do
-    name 'customer1'
-  end
-
-  factory :supplier do
-    name 'supplier1'
-  end
 
   factory :product do
     name 'piaz'

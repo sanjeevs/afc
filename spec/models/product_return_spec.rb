@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe ProductReturn do
-  before { @product_return = FactoryGirl.create(:product_return) }
+  before do
+    @product_return = FactoryGirl.create(:product_return) 
+  end
 
   subject { @product_return }
 
@@ -13,8 +15,10 @@ describe ProductReturn do
   end
 
   describe "assocations" do
-    it { expect(@product_return.product.name).to eql('piaz') }
-    it { expect(@product_return.customer.name).to eql('Customer1') }
+    let(:customer) { Customer.find(@product_return.customer_id) }
+    let(:product) { Product.find(@product_return.product_id) }
+    it { expect(@product_return.product.name).to eql(product.name) }
+    it { expect(@product_return.customer.name).to eql(customer.name) }
   end
 
 end
