@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424235343) do
+ActiveRecord::Schema.define(version: 20160426123035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,17 @@ ActiveRecord::Schema.define(version: 20160424235343) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "supply_adjusts", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "supply_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "supply_adjusts", ["supply_id"], name: "index_supply_adjusts_on_supply_id", using: :btree
+  add_index "supply_adjusts", ["user_id"], name: "index_supply_adjusts_on_user_id", using: :btree
+
   create_table "supply_consumptions", force: :cascade do |t|
     t.integer  "amount"
     t.integer  "supply_id"
@@ -177,6 +188,8 @@ ActiveRecord::Schema.define(version: 20160424235343) do
   add_foreign_key "production_runs", "products"
   add_foreign_key "production_runs_supplies", "production_runs"
   add_foreign_key "production_runs_supplies", "supplies"
+  add_foreign_key "supply_adjusts", "supplies"
+  add_foreign_key "supply_adjusts", "users"
   add_foreign_key "supply_consumptions", "production_runs"
   add_foreign_key "supply_consumptions", "supplies"
   add_foreign_key "supply_receiveds", "suppliers"
