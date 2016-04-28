@@ -11,6 +11,11 @@ describe SupplyReceived do
     it { should_not be_valid }
   end
 
+  describe "supply nil" do
+    before { @supply_received.supply_id = 0; }
+    it { should_not be_valid }
+  end
+
   describe "supplier association" do
     let(:supplier) { Supplier.find(@supply_received.supplier_id) }
     it { expect(@supply_received.supplier.name).to eql(supplier.name) }

@@ -14,6 +14,11 @@ describe ProductReturn do
     it { expect(@product_return.valid?).to eql(false) }
   end
 
+  describe "product nil" do
+    before { @product_return.product_id = 0; }
+    it { should_not be_valid }
+  end
+
   describe "assocations" do
     let(:customer) { Customer.find(@product_return.customer_id) }
     let(:product) { Product.find(@product_return.product_id) }

@@ -7,8 +7,13 @@ describe ProductAdjust do
 
   it { should be_valid }
 
-  describe "amount should not be 0" do
-    before { @product_adjust.amount = 0 }
+  describe "amount can be negative" do
+    before { @product_adjust.amount = -1 }
+    it { expect(@product_adjust.valid?).to eql(true) }
+  end
+
+  describe "product nil" do
+    before { @product_adjust.product_id = 0 }
     it { expect(@product_adjust.valid?).to eql(false) }
   end
 

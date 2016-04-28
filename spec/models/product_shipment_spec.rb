@@ -12,6 +12,11 @@ describe ProductShipment do
     it { expect(@product_shipment.valid?).to eql(false) }
   end
 
+  describe "product nil" do
+    before { @product_shipment.product_id = 0; }
+    it { should_not be_valid }
+  end
+
   describe "assocations" do
     let(:product) { Product.find(@product_shipment.product_id) }
     let(:customer) { Customer.find(@product_shipment.customer_id) }
