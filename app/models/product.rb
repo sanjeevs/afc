@@ -29,4 +29,11 @@ class Product < ActiveRecord::Base
     product_adjusts.sum(:amount)
   end
 
+  # For all operations the following condition must hold
+  # ProductAmount + ProductAdjust = ProductShipment - ProductReturn
+  def is_amount_valid?
+    total_production_amount + total_adjusts = total_shipments 
+                                              - total_returns
+  end
+
 end
