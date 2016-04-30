@@ -1,4 +1,5 @@
 require 'ostruct'
+require_relative "exceptions"
 
 # Changes product amount due to various operations.
 # For all operations the following condition must hold
@@ -11,28 +12,22 @@ class UpdateProductAmount;
   def production_run_update(production_run_id, new_amount)
     result = OpenStruct.new(success?: true, errors: [])
     production_run = ProductionRun.find(production_run_id)
+    result.production_run = production_run
     product = production_run.product 
     
     orig_amount = production_run.amount
     production_run.amount = new_amount
     product.amount = product.amount - orig_amount + new_amount
-    
-    # Apply the golden check.
-    unless product.is_amount_valid? 
-      result.send("success?=", false)
-      result.errors << "Specified amount #{new_amount}"\
-                       " makes the product amount invalid"
-    end
-
-    if result.success?
-      ActiveRecord::Base.transaction do
-        production_run.save!
-        product.save!
-      end
-      result.production_run = production_run
+   
+    ActiveRecord::Base.transaction do
+      raise MyAppError::ProductAmountError.new unless product.is_amount_valid?
+      production_run.save!
+      product.save!
     end
 
     result
+    rescue MyAppError::MyAssertError => e 
+      result.send("success?=", false)
+      result.errors << e.message
   end
 end
-
