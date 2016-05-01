@@ -5,11 +5,6 @@ describe UpdateProductAmount do
     @production_run = FactoryGirl.create(:production_run)
   end
 
-  context "invalid production run id" do
-    it "raise an exception" do
-      expect { UpdateProductAmount.new.production_run_update(0, 1) }.to raise_exception(ActiveRecord::RecordNotFound)
-    end
-  end
 
   describe "increasing prod run amount" do
     before do
@@ -21,11 +16,10 @@ describe UpdateProductAmount do
       @production_run.product.amount = 213
       @production_run.product.save!
       @production_run.save!
-      result = UpdateProductAmount.new.production_run_update(@production_run.id, 150)
-      @pr = result.production_run
+      result = UpdateProductAmount.new.incr(@production_run, 150)
     end
-    it {expect(@pr.amount).to eql(150) } 
-    it {expect(@pr.product.amount).to eql(213-107+150) } 
+    it {expect(@production_run.amount).to eql(150) } 
+    it {expect(@production_run.product.amount).to eql(213-107+150) } 
   end
 
   describe "decreasing prod run amount" do
@@ -38,12 +32,11 @@ describe UpdateProductAmount do
       @production_run.product.amount = 213
       @production_run.product.save!
       @production_run.save!
-      @result = UpdateProductAmount.new.production_run_update(@production_run.id, 13)
-      @pr = @result.production_run
+      @result = UpdateProductAmount.new.incr(@production_run, 13)
     end
     it { expect(@result.success?).to eql(true) }
-    it { expect(@pr.amount).to eql(13) } 
-    it { expect(@pr.product.amount).to eql(213-111+13) } 
+    it { expect(@production_run.amount).to eql(13) } 
+    it { expect(@production_run.product.amount).to eql(213-111+13) } 
   end
 
   describe 'invalid prod run amount' do
@@ -57,7 +50,7 @@ describe UpdateProductAmount do
     end
     it do
       expect {
-         UpdateProductAmount.new.production_run_update(@production_run.id, 2)
+         UpdateProductAmount.new.incr(@production_run, 2)
       }.to raise_exception ActiveRecord::RecordInvalid
     end
     it { expect(@production_run.amount).to eql(200) }
