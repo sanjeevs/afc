@@ -32,6 +32,7 @@ class Product < ActiveRecord::Base
   # For all operations the following condition must hold
   # ProductAmount + ProductAdjust = ProductShipment - ProductReturn + amount
   def is_amount_valid? 
+    #puts "Total production=#{total_production_amount} with adjust=#{total_adjusts} that has #{total_shipments} shipments and #{total_returns} returns is left with #{amount} in product inventory."
     if((total_production_amount + total_adjusts) !=
                    (total_shipments - total_returns + amount)) 
       errors.add(:amount, 

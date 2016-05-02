@@ -36,6 +36,7 @@ class UpdateProductAmount;
     rescue MyAppError::MyAssertError => e 
       result.send("success?=", false)
       result.errors << e.message
+      record.errors.add(:amount, e.message)
       result
   end
 end
