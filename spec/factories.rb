@@ -36,8 +36,21 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:name) { |n| "product_#{n}" }
-    amount { Faker::Number.between(1, 100) }
+    amount  500 
     comment { Faker::Lorem.paragraph }
+
+    factory :real_product do
+      transient do
+        num_assoc 5
+      end
+
+      after(:build) do |product, evaluator|
+        create_list(:production_run, evaluator.num_assoc, product: product, amount: 199)
+        create_list(:product_shipment, evaluator.num_assoc, product: product, amount: 120)
+        create_list(:product_return, evaluator.num_assoc, product: product, amount: 20)
+        create_list(:product_adjust, evaluator.num_assoc, product: product, amount: 1)
+      end
+    end
   end 
 
   factory :production_run do
@@ -49,7 +62,7 @@ FactoryGirl.define do
     product
   end
   factory :product_shipment do
-    amount { Faker::Number.between(1, 100) } 
+    amount 0
     product
     ship_date { Faker::Date.between(Date.today - 5, Date.today) }
     customer

@@ -16,27 +16,23 @@ describe UpdateProductAmount do
       @production_run.product.amount = 213
       @production_run.product.save!
       @production_run.save!
-      result = UpdateProductAmount.new.incr(@production_run, 150)
+      result = UpdateProductAmount::incr(@production_run, 150)
     end
     it {expect(@production_run.amount).to eql(150) } 
     it {expect(@production_run.product.amount).to eql(213-107+150) } 
   end
 
-  describe "decreasing prod run amount" do
+  describe "decreasing prod run amount", focus: true do
     before do
-      # First time this production run produced 111.
-      # The number of product remaining is 213 (there were other runs).
-      # If we change the amount in the production run to 13 then the amount
-      # of product would decrease by the net.
-      @production_run.amount = 111
-      @production_run.product.amount = 213
+      @production_run.amount = 2 
+      @production_run.product.amount = 2
       @production_run.product.save!
       @production_run.save!
-      @result = UpdateProductAmount.new.incr(@production_run, 13)
+      @result = UpdateProductAmount::incr(@production_run, 1)
     end
     it { expect(@result.success?).to eql(true) }
-    it { expect(@production_run.amount).to eql(13) } 
-    it { expect(@production_run.product.amount).to eql(213-111+13) } 
+    it { expect(@production_run.amount).to eql(1) } 
+    it { expect(@production_run.product.amount).to eql(1) } 
   end
 
   describe 'invalid prod run amount' do
@@ -48,10 +44,9 @@ describe UpdateProductAmount do
       @production_run.amount = 200 
       @production_run.product.amount = 1 
     end
-    it do
-      expect {
-         UpdateProductAmount.new.incr(@production_run, 2)
-      }.to raise_exception ActiveRecord::RecordInvalid
+    it do expect {
+         UpdateProductAmount::incr(@production_run, 2)
+      }.to raise_exception ActiveRecord::RecordInvalid 
     end
     it { expect(@production_run.amount).to eql(200) }
     it { expect(@production_run.product.amount).to eql(1) }

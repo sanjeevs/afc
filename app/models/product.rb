@@ -30,10 +30,21 @@ class Product < ActiveRecord::Base
   end
 
   # For all operations the following condition must hold
-  # ProductAmount + ProductAdjust = amount - ProductShipment + ProductReturn
-  def is_amount_valid?
-    total_production_amount + total_adjusts = amount - total_shipments 
-                                              + total_returns
+  # ProductAmount + ProductAdjust = ProductShipment - ProductReturn + amount
+  def is_amount_valid? 
+    if((total_production_amount + total_adjusts) !=
+                   (total_shipments - total_returns + amount)) 
+      errors.add(:amount, 
+        "Consistent check fails. Total production=#{total_production_amount} with adjust=#{total_adjusts} that has #{total_shipments} shipments and #{total_returns} returns is left with #{amount} in product inventory.")
+      return false
+    end
+
+    if (total_shipments < total_returns) 
+      errors.add(:amount, 
+             "Total  #{total_shipments} shipments is less than #{total_returns} returns")
+      return false
+    end
+    return true
   end
 
 end

@@ -10,7 +10,11 @@ class MyAssertError < StandardError
 
 end
 
-class PoductAmountError < MyAssertError
+class ProductAmountError < MyAssertError
+  def initialize
+    super('Product amount business constraint violated')
+  end
+
   def message
     "Product amount cannot be negative"
   end
