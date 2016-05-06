@@ -34,7 +34,7 @@ describe "Compute Product total" do
   context "sum total adjusts" do
     before do
       @customer = Customer.create!(name: 'southern season')
-      @user = User.create!(name: 'hello', email: 'hello@example.org')
+      @user = FactoryGirl.create(:user)
       @user.product_adjusts << ProductAdjust.new(amount: -1)
       @product.product_adjusts << @user.product_adjusts
       @product.save!  #Helps to validate all the children.

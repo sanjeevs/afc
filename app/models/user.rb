@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
   # for bookeeping.
   has_many :product_adjusts
   has_many :supply_adjusts
+
+  has_secure_password
+
 end

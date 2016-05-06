@@ -2,6 +2,8 @@ FactoryGirl.define do
   factory :user do
     sequence(:name) { |n| "user_#{n}" }
     sequence(:email) { |n| "user_#{n}@example.org" }
+    password "foobar"
+    password_confirmation "foobar"
   end
   
   factory :customer do
@@ -61,6 +63,7 @@ FactoryGirl.define do
     producer
     product
   end
+
   factory :product_shipment do
     amount 0
     product

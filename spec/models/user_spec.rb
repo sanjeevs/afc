@@ -13,4 +13,10 @@ describe User do
     it { expect(@duplicate_user.valid?).to eql(false) }
   end
 
+  describe "name must be present" do
+    before { @user.name = "   " }
+    it { expect(@user).not_to be_valid }
+  end
+
+
 end
