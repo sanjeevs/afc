@@ -13,9 +13,9 @@ describe SupplyAdjust do
   end
 
 
-  describe "amount should not be 0" do
-    before { @supply_adjust.amount = 0 }
-    it { expect(@supply_adjust.valid?).to eql(false) }
+  describe "amount can be -ve" do
+    before { @supply_adjust.amount = -1 }
+    it { expect(@supply_adjust.valid?).to eql(true) }
   end
 
 end

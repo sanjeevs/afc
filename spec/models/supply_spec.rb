@@ -6,6 +6,11 @@ describe Supply do
 
   it { should be_valid }
 
+  describe "defaut amount" do
+    before { @new_supply = Supply.create!(name: 'dummy') }
+    it { expect(@new_supply.amount).to eql 0 }
+  end
+
   describe 'nil amount' do
     before { @supply.amount = nil }
     it { expect(@supply.valid?).to eq(false) }

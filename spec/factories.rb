@@ -83,8 +83,20 @@ FactoryGirl.define do
 
   factory :supply do
     sequence(:name) { |n| "supply_#{n}" }
-    amount { Faker::Number.between(1, 100) } 
+    amount 294 
     unit "Unit"
+
+    factory :real_supply do
+      transient do
+        num_assoc 3
+      end
+
+      after(:build) do |supply, evaluator|
+        create_list(:supply_consumption, evaluator.num_assoc, supply: supply, amount: 11)
+        create_list(:supply_received, evaluator.num_assoc, supply: supply, amount: 110)
+        create_list(:supply_adjust, evaluator.num_assoc, supply: supply, amount: -1)
+      end
+    end
   end
 
   factory :supply_received do

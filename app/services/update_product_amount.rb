@@ -5,7 +5,7 @@ require_relative "exceptions"
 # For all operations the following condition must hold
 # ProductAmount + ProductAdjust = ProductShipment - ProductReturn
 
-class UpdateProductAmount;
+class UpdateProductAmount
 
   def self.incr(record, new_amount)
     self.update(:incr, record, new_amount)
