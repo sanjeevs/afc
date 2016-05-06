@@ -5,6 +5,7 @@ describe User do
   subject { @user }
   it { should be_valid }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_token) }
 
   let(:found_user) { User.find_by_email(@user.email) }
 
@@ -43,4 +44,10 @@ describe User do
  describe "with invalid password" do
   it { expect(found_user.authenticate('mismatch')).to eql false}
  end
+
+ describe "remember token" do
+  before { @user.save }
+  it { expect(@user.remember_token).to_not be_blank }
+ end
+
 end
