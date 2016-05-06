@@ -18,5 +18,19 @@ describe User do
     it { expect(@user).not_to be_valid }
   end
 
+  describe "when password is not present" do
+    before { @user.password = @user.password_confirmaton = " " }
+    it { should_not be_valid }
+  end
+
+  describe "when password confirmation is not nil" do
+    before { @user.password_confirmation = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when password confirmaton mismatches" do
+    before { @user.password_confirmation = "mismatch"}
+    it { should_not be_valid }
+  end
 
 end
