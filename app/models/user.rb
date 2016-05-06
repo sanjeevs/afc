@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
     format: { with: VALID_EMAIL_REGEX }, 
     uniqueness: { case_sensitive: false } 
 
+  before_save { |user| user.email = email.downcase }
+
   # do not delete the adjusts just because the user is deleted.
   # Instead we copy over the name and email of the user to adjust
   # for bookeeping.
@@ -12,5 +14,6 @@ class User < ActiveRecord::Base
   has_many :supply_adjusts
 
   has_secure_password
-
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :password_confirmation, presence: true
 end
