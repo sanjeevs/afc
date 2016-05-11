@@ -15,8 +15,7 @@ class User < ActiveRecord::Base
   has_many :supply_adjusts
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :password_confirmation, presence: true
+  validates :password, length: { minimum: 6 }
 
   private
   def create_remember_token
