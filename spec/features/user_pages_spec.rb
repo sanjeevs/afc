@@ -19,7 +19,6 @@ describe "User pages" do
     describe "with valid information" do
       before do
         fill_in "Name", with: "Example user"
-        fill_in "Email", with: 'user@example.org'
         fill_in "Password", with: 'foobar'
         fill_in "Confirmation", with: 'foobar'
       end

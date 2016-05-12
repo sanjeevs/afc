@@ -7,15 +7,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
 
-  let(:found_user) { User.find_by_email(@user.email) }
-
-  describe 'email must be unique' do
-    before do
-      @duplicate_user = @user.dup
-      @duplicate_user.email = @user.email.upcase
-    end
-    it { expect(@duplicate_user.valid?).to eql(false) }
-  end
+  let(:found_user) { User.find_by_name(@user.name) }
 
   describe "name must be present" do
     before { @user.name = "   " }
