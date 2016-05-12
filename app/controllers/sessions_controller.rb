@@ -8,12 +8,12 @@ class SessionsController < ApplicationController
   # Handle the POST submit
   def create
     # Find the user
-    user = User.find_by_email(params[:session][:email])
+    user = User.find_by_name(params[:session][:name])
     if user && user.authenticate(params[:session][:password])
       redirect_to user
     else
       # Render does not count as new request.
-      flash.now[:error] = "Invalid email/password combination"
+      flash.now[:error] = "Invalid name/password combination"
       render 'new'
     end
   end
