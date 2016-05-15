@@ -34,12 +34,9 @@ describe "Compute Product total" do
   context "sum total adjusts" do
     before do
       @customer = Customer.create!(name: 'southern season')
-      @user = FactoryGirl.create(:user)
-      @user.product_adjusts << ProductAdjust.new(amount: -1)
-      @product.product_adjusts << @user.product_adjusts
+      @product.product_adjusts << ProductAdjust.new(amount: -1)
       @product.save!  #Helps to validate all the children.
     end
-    it { expect(@user.product_adjusts[0].amount).to eql(-1) }
     it { expect(@product.product_adjusts.size).to eql(1) }
     it { expect(@product.product_adjusts[0].amount).to eql(-1) }
     it { expect(@product.total_adjusts).to eql(-1) }

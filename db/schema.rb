@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512210936) do
+ActiveRecord::Schema.define(version: 20160514002722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,15 +48,11 @@ ActiveRecord::Schema.define(version: 20160512210936) do
   create_table "product_adjusts", force: :cascade do |t|
     t.integer  "amount"
     t.integer  "product_id"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "name"
-    t.string   "email"
   end
 
   add_index "product_adjusts", ["product_id"], name: "index_product_adjusts_on_product_id", using: :btree
-  add_index "product_adjusts", ["user_id"], name: "index_product_adjusts_on_user_id", using: :btree
 
   create_table "product_returns", force: :cascade do |t|
     t.integer  "amount"
@@ -140,15 +136,11 @@ ActiveRecord::Schema.define(version: 20160512210936) do
   create_table "supply_adjusts", force: :cascade do |t|
     t.integer  "amount"
     t.integer  "supply_id"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "name"
-    t.string   "email"
   end
 
   add_index "supply_adjusts", ["supply_id"], name: "index_supply_adjusts_on_supply_id", using: :btree
-  add_index "supply_adjusts", ["user_id"], name: "index_supply_adjusts_on_user_id", using: :btree
 
   create_table "supply_consumptions", force: :cascade do |t|
     t.integer  "amount"
@@ -185,7 +177,6 @@ ActiveRecord::Schema.define(version: 20160512210936) do
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
   add_foreign_key "product_adjusts", "products"
-  add_foreign_key "product_adjusts", "users"
   add_foreign_key "product_returns", "customers"
   add_foreign_key "product_returns", "products"
   add_foreign_key "product_shipments", "customers"
@@ -195,7 +186,6 @@ ActiveRecord::Schema.define(version: 20160512210936) do
   add_foreign_key "production_runs_supplies", "production_runs"
   add_foreign_key "production_runs_supplies", "supplies"
   add_foreign_key "supply_adjusts", "supplies"
-  add_foreign_key "supply_adjusts", "users"
   add_foreign_key "supply_consumptions", "production_runs"
   add_foreign_key "supply_consumptions", "supplies"
   add_foreign_key "supply_receiveds", "suppliers"

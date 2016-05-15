@@ -19,8 +19,6 @@ describe ProductAdjust do
 
   describe "associations" do
     let(:product) { Product.find(@product_adjust.product_id) }
-    let(:user) { User.find(@product_adjust.user_id) }
     it { expect(@product_adjust.product.name).to eql(product.name) }
-    it { expect(@product_adjust.user.name).to eql(user.name) }
   end
 end

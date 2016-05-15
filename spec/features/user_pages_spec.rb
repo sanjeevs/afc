@@ -30,6 +30,20 @@ describe "User pages" do
 
   end
 
+  describe "edit" do
+    let(:user) { FactoryGirl.create(:user) }
+    before { visit edit_user_path(user) }
+
+    describe "page" do
+      it { should have_title(full_title('Edit User')) }
+    end
+
+    describe 'with invalid information' do
+      before { click_button "Save changes" }
+      it { should have_content('error') }
+    end
+  end
+
   describe 'profile page' do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }

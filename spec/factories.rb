@@ -80,7 +80,6 @@ FactoryGirl.define do
   factory :product_adjust do
     amount { Faker::Number.between(1, 100) } 
     product  
-    user
   end
 
   factory :supply do
@@ -117,7 +116,6 @@ FactoryGirl.define do
   factory :supply_adjust do
     amount { Faker::Number.between(1, 100) } 
     supply 
-    user
   end
 
 
