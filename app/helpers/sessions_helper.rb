@@ -14,11 +14,13 @@ module SessionsHelper
   # If used more than once in a request then do memonization.
   def current_user
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+    return @current_user
   end
 
   # Check if a user is signed in ?
   def signed_in?
-    !@current_user.nil?
+    status = !current_user.nil?
+    return status 
   end
 
   # Sign out a user.

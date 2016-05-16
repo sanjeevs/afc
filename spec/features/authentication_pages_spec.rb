@@ -4,6 +4,7 @@ describe "Authentication" do
 
   subject { page }
 
+  # Make sure that signin works.
   describe "signin page" do
     before { visit signin_path }
 
@@ -34,6 +35,16 @@ describe "Authentication" do
     end
 
   end
+
+  describe "for non signed in user" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    describe "visiting the edit page" do
+      before { visit edit_user_path(user) }
+      it { should have_title(full_title('Sign-in')) }
+    end
+  end
+
 
 end
 

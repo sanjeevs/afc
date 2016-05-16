@@ -48,7 +48,7 @@ group :development do
   gem 'spring'
 end
 
-group :test do
+group :development, :test do
   gem 'selenium-webdriver'
   gem 'capybara'
   gem 'factory_girl_rails'

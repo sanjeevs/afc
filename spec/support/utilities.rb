@@ -1,8 +1,9 @@
 include ApplicationHelper
 
-def valid_signin(user)
-  fill_in "Email", user.email
-  fill_in "Password", user.password
+def sign_in(user, options={})
+  visit signin_path
+  fill_in "Name", with: user.name
+  fill_in "Password", with: user.password
   click_button "Sign in"
 end
 
