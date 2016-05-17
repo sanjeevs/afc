@@ -32,18 +32,19 @@ describe "User pages" do
 
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
-    before do
-      sign_in user
-      visit edit_user_path(user) 
+    before { visit edit_user_path(user) }
+
+    describe "invalid user" do
+      it { should have_title(full_title('Sign-in')) }
     end
 
-    describe "page" do
+    describe "valid edit user present" do
+      before { sign_in user } 
       it { should have_title(full_title('Edit User')) }
-    end
-
-    describe 'with invalid information' do
-      before { click_button "Save changes" }
-      it { should have_content('error') }
+      describe "invalid content" do
+        before { click_button "Save changes" }
+        it { should have_content('error') }
+      end
     end
   end
 

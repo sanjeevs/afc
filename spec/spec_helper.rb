@@ -30,5 +30,5 @@ RSpec.configure do |config|
   config.after(:each) do |group|
     DatabaseCleaner.clean
   end
-
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
 end
