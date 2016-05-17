@@ -45,6 +45,18 @@ describe "Authentication" do
     end
   end
 
+  describe "wrong user" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:wrong_user) { FactoryGirl.create(:user) }
+    before { sign_in user }
+
+    describe "visiting user#edit page" do
+      before { visit edit_user_path(wrong_user) }
+      it { should_not have_title(full_title('Edit User')) }
+    end
+
+  end    
+
 
 end
 
