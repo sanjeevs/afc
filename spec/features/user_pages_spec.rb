@@ -55,5 +55,29 @@ describe "User pages" do
     it { should have_title(full_title(user.name)) }
   end
 
+  describe "index page" do
+    before { visit users_path }
+    describe "invalid user" do
+      it { should have_title(full_title('Sign-in')) }
+    end
+
+    describe "valid user present" do
+      before do
+        sign_in FactoryGirl.create(:user)
+        FactoryGirl.create(:user, name: "Bob", password: "foobar")
+        FactoryGirl.create(:user, name: "Ben", password: "foobar")
+        visit users_path
+      end
+
+      it { should have_title(full_title("All Users")) }
+      it { should have_selector("h1", text: "All Users") }
+      it "should list each user" do
+        User.paginate(page: 1).each do |user|
+          page.should have_selector('li', text: user.name)
+        end
+      end
+    end
+  end
+
 end
 

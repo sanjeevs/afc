@@ -4,8 +4,10 @@ describe User do
   before { @user = FactoryGirl.create(:user) }
   subject { @user }
   it { should be_valid }
+  it { should_not be_admin }
   it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
+  it { should respond_to(:admin) }
 
   let(:found_user) { User.find_by_name(@user.name) }
 
@@ -41,5 +43,10 @@ describe User do
   before { @user.save }
   it { expect(@user.remember_token).to_not be_blank }
  end
+
+  describe "with admin set to true" do
+    before { @user.toggle!(:admin) }
+    it { should be_admin }
+  end
 
 end
