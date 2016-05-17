@@ -16,12 +16,6 @@ describe "Authentication" do
       it { should have_title(full_title('Sign-in')) }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
 
-      describe "click on home" do
-        before { click_link "Home" }
-        it { should have_title(full_title('Home')) }
-        it { should_not have_selector('div.alert.alert-error', 
-                                      text: 'Invalid') }
-      end
     end
 
     describe "with valid information" do
@@ -32,6 +26,14 @@ describe "Authentication" do
         click_button 'Sign in'
       end
       it { should have_title(full_title(user.name)) }
+      describe "click on home" do
+        before do 
+          click_link "Home"
+        end
+        it { should have_title(full_title('Home')) }
+        it { should_not have_selector('div.alert.alert-error', 
+                                      text: 'Invalid') }
+      end
     end
 
   end
@@ -57,6 +59,21 @@ describe "Authentication" do
 
   end    
 
+  describe "for non signed-in users" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      visit root_path
+      fill_in "Name", with: user.name
+      fill_in "Password", with: user.password
+      click_button "Sign in"
+    end
+
+    describe "after sign in" do
+      it "should render the protected page" do
+        page.should have_title(full_title('Home'))
+      end
+    end
+  end
 
 end
 
