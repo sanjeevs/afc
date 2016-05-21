@@ -18,6 +18,10 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number }
   end
 
+  factory :invalid_customer, parent: :customer do |f|
+    f.name  nil
+  end
+
   factory :supplier do
     sequence(:name) { |n| "supplier_#{n}" }
     address { Faker::Address.street_address }
