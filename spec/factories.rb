@@ -42,6 +42,10 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number }
   end
 
+  factory :invalid_producer, parent: :producer do |f|
+    f.name  nil
+  end
+
   factory :product do
     sequence(:name) { |n| "product_#{n}" }
     amount  500 
