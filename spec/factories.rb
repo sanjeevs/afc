@@ -64,6 +64,11 @@ FactoryGirl.define do
       end
     end
   end 
+  
+  factory :invalid_product, parent: :product do |f|
+    f.name  nil
+  end
+
 
   factory :production_run do
     amount { Faker::Number.between(1, 100) }
